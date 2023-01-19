@@ -5,15 +5,22 @@ const app = Vue.createApp({
   name: "Email list",
   data() {
     return {
-      email: "",
+      emails: [],
     };
   },
+  methods: {
+    getRandomMail() {
+      axios
+        .get("https://flynn.boolean.careers/exercises/api/random/mail")
+        .then((response) => {
+          this.emails.push(response.data.response);
+        });
+    },
+  },
   mounted() {
-    axios
-      .get("https://flynn.boolean.careers/exercises/api/random/mail")
-      .then((response) => {
-        this.email = response.data.response;
-      });
+    for (let i = 0; i < 10; i++) {
+      this.getRandomMail();
+    }
   },
 });
 
